@@ -2,21 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
     public function getIndex()
     {
-        return view('productos.index', ['arrayProductos' => self::$arrayProductos]);
+        //return view('productos.index', ['arrayProductos' => self::$arrayProductos]);
+
+        $productos = Producto::all();
+        return view('productos.index', array('arrayProductos' => $productos));
     }
 
     public function getShow($id)
     {
+        /*
         return view('productos.show', array(
                                         'arrayProductos' => self::$arrayProductos[$id - 1],
                                         'id' => $id
         ));
+        */
+
+        $producto = Producto::findOrFail($id);
+        return view('productos.show', array('producto' => $producto));
     }
 
     public function getCreate()
@@ -26,9 +35,12 @@ class ProductoController extends Controller
 
     public function getEdit($id)
     {
-        return view('productos.edit', array('id'=>$id));
+        //return view('productos.edit', array('id'=>$id));
+        $producto = Producto::findOrFail($id);
+        return view('productos.edit', array('producto' => $producto));
     }
 
+    /*
     private static $arrayProductos = array(
             array('Aceite','Aceites y grasas'),
             array('Aceite de oliva','Aceites y grasas'),
@@ -325,4 +337,5 @@ class ProductoController extends Controller
             array('Suavizante ropa','Limpieza del hogar'),
             array('Toalla de papel','Limpieza del hogar')
         );
+    */
 }
