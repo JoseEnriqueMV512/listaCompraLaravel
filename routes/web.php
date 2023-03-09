@@ -47,6 +47,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('productos/edit/{id}', [ProductoController::class, 'getEdit']);
 
     Route::put('productos/edit/{id}', [ProductoController::class, 'putEdit']);
+
+    Route::put('productos/comprar/{id}', [ProductoController::class, 'putComprar']);
 });
 
 Route::get('/dashboard', function () {
