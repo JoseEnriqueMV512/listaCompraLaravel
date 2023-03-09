@@ -30,7 +30,26 @@ class ProductoController extends Controller
 
     public function getCreate()
     {
+
         return view('productos.create');
+    }
+
+    public function postCreate(Request $request)
+    {
+        $producto = $request->all();
+        $p = new Producto;
+        $p->nombre = $producto['nombre'];
+        $p->precio = $producto['precio'];
+        $p->categoria = $producto['categoria'];
+        $p->imagen = $producto['imagen'];
+        $p->descripcion = $producto['descripcion'];
+        $p->save();
+
+        /*
+        $productos = Producto::all();
+        return view('productos.index', array('arrayProductos' => $productos));
+        */
+        return redirect()->action([ProductoController::class, 'getIndex']);
     }
 
     public function getEdit($id)
@@ -39,6 +58,22 @@ class ProductoController extends Controller
         $producto = Producto::findOrFail($id);
         return view('productos.edit', array('producto' => $producto));
     }
+
+    public function putEdit(Request $request, $id)
+    {
+        $productoNew = $request->all();
+        $producto = Producto::findOrFail($id);
+
+        $producto->nombre = $productoNew['nombre'];
+        $producto->precio = $productoNew['precio'];
+        $producto->categoria = $productoNew['categoria'];
+        $producto->imagen = $productoNew['imagen'];
+        $producto->descripcion = $productoNew['descripcion'];
+        $producto->save();
+
+        return redirect()->action([ProductoController::class, 'getShow'] , $id);
+    }
+
 
     /*
     private static $arrayProductos = array(

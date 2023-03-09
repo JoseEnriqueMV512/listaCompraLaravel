@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('content')
 
@@ -10,33 +10,33 @@
               </div>
               <div class="card-body" style="padding:30px">
 
-                <form action="{{ url('/productos/edit'),$producto['id'] }}" method="POST">
+                <form action="{{ url('/productos/edit/'.$producto['id'])}}" method="POST">
                     {{method_field('PUT')}}
-                         @csrf
+                        @csrf
 
                      <div class="form-group">
-                        <label for="title">Nombre</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control" value="{{$producto['nombre']}}">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" name="nombre" id="nombre" class="form-control" value="{{$producto->nombre}}">
                      </div>
 
                      <div class="form-group">
-                         <label for="title">Precio</label>
-                        <input type="number" name="precio" id="precio" class="form-control">
+                         <label for="precio">Precio</label>
+                        <input type="number" name="precio" id="precio" class="form-control" value="{{$producto->precio}}">
                      </div>
 
                      <div class="form-group">
-                         <label for="title">Categoría</label>
-                        <input type="text" name="categoria" id="categoria" class="form-control" value="{{$producto['categoria']}}">
+                         <label for="categoria">Categoría</label>
+                        <input type="text" name="categoria" id="categoria" class="form-control" value="{{$producto->categoria}}">
                      </div>
 
                      <div class="form-group">
-                         <label for="title">Imagen</label>
-                        <input type="text" name="imagen" id="imagen" class="form-control">
+                         <label for="imagen">Imagen</label>
+                        <input type="text" name="imagen" id="imagen" class="form-control" value="{{$producto->imagen}}">
                      </div>
 
                      <div class="form-group">
-                        <label for="synopsis">Descripción</label>
-                        <textarea name="descripcion" id="descripcion" class="form-control" rows="3"></textarea>
+                        <label for="descripcion">Descripción</label>
+                        <textarea name="descripcion" id="descripcion" class="form-control" rows="3" value="{{$producto['descripcion']}}"></textarea>
                      </div>
 
                      <div class="form-group text-center">

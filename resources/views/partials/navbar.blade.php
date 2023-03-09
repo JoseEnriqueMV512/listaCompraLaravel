@@ -8,6 +8,7 @@
 
         @if( true || Auth::check() )
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                @guest
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item {{ Request::is('productos') && ! Request::is('productos/create')? 'active' : ''}}">
                         <a class="nav-link" href="{{url('/productos')}}">
@@ -21,7 +22,7 @@
                         </a>
                     </li>
                 </ul>
-
+                @endguest
                 <ul class="navbar-nav navbar-right">
                     <li class="nav-item">
                         <form action="{{ url('/logout') }}" method="POST" style="display:inline">

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Producto;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,17 +16,38 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         self::seedProductos();
+        self::seedUsers();
         $this->command->info('Tabla productos inicializada con datos!');
     }
 
     public function seedProductos(){
         Producto::truncate();
-        foreach( self::$arrayProductos as $producto){
+        foreach( self::$arrayProductos as $producto ){
             $p = new Producto;
             $p->nombre = $producto[0];
             $p->categoria = $producto[1];
             $p->save();
         }
+    }
+
+    public function seedUsers(){
+        DB::table('users')->truncate();
+
+        DB::table('users')->insert([
+            'name' => 'Jose',
+            'email' => 'jose@example.es',
+            'password' => bcrypt('123456'),
+            'nombre' => 'Jose',
+            'apellidos' => 'Mateos'
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Ezequiel',
+            'email' => 'ezequiel@example.es',
+            'password' => bcrypt('password'),
+            'nombre' => 'Ezequiel',
+            'apellidos' => 'Carrasco'
+        ]);
     }
 
     private static $arrayProductos = array(

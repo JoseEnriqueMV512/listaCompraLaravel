@@ -2,6 +2,4 @@
 
 @section('content')
 
-    Pantalla principal
-
 @stop
