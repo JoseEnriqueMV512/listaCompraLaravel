@@ -12,23 +12,42 @@
 
         </div>
         <div class="col-sm-8">
-            <!--Nombre producto-->
-            <h5>Nombre: {{$producto['nombre']}}</h5>
+            <!--Nombre del producto-->
+            <h3>Nombre: {{$producto['nombre']}}</h3>
 
-            <!--Categoria producto-->
+            <!--Precio del producto-->
+            <h5>Precio: {{$producto['precio']}}</h5>
+
+            <!--Categoria del producto-->
             <h5>Categoría: {{$producto['categoria']}}</h5>
 
-            <!--Botón de Comprar/Comprado-->
+            <!--Descripción del producto-->
+            <h5>Descripción: {{$producto['descripcion']}}</h5>
+
+            <!--Estado del producto-->
             @if($producto['pendiente'])
-                <a class="btn btn-danger" href="#">Comprado</a>
+                <h5>Estado: Producto actualmente comprado</h5>
             @else
-                <a class="btn btn-success" href="#">Comprar</a>
+                <h5>Estado: Pendiente de compra</h5>
             @endif
 
+            <!--Formulario del botón comprar-->
+            <form action="{{ url('/productos/comprar/'.$producto['id'])}}" method="POST">
+                {{method_field('PUT')}}
+                @csrf
+                <div>
+                    <button type="submit" class="btn btn-danger" style="float:left; margin-right:5px">
+                        Comprar
+                    </button>
+                 </div>
+            </form>
+
+            <!--Botón de editar-->
             <a class="btn btn-warning" href="{{ url('/productos/edit/' . $producto['id'] ) }}">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 Editar producto</a>
 
+            <!--Botón de volver al listado-->
             <a class="btn btn-outline-info" href="{{ action('App\Http\Controllers\ProductoController@getIndex') }}">Volver al listado</a>
 
         </div>

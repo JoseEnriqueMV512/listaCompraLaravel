@@ -74,6 +74,16 @@ class ProductoController extends Controller
         return redirect()->action([ProductoController::class, 'getShow'] , $id);
     }
 
+    public function putComprar(Request $request, $id)
+    {
+        $producto = Producto::findOrFail($id);
+
+        $producto->pendiente = true;
+        $producto->save();
+
+        return redirect()->action([ProductoController::class, 'getShow'] , $id);
+    }
+
 
     /*
     private static $arrayProductos = array(
