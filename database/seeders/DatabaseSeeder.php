@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Producto;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -35,9 +36,9 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->truncate();
 
         DB::table('users')->insert([
-            'name' => 'Jose',
-            'email' => 'jose@example.es',
-            'password' => bcrypt('123456'),
+            'name' => env('DATABASE_ADMIN'),
+            'email' => env('DATABASE_EMAIL'),
+            'password' => Hash::make(env('DATABASE_PASS')),
             'email_verified_at' => now(),
             'nombre' => 'Jose',
             'apellidos' => 'Mateos'

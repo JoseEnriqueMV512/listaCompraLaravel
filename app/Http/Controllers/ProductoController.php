@@ -7,12 +7,39 @@ use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
-    public function getIndex()
+    public function getIndex($categoria = null)
     {
+        //Ejercicio donde todavía no teníamos la base de datos y accediamos al array que creamos dentro de este fichero
         //return view('productos.index', ['arrayProductos' => self::$arrayProductos]);
 
+        //Pilla todos los productos de mi base de datos
         $productos = Producto::all();
-        return view('productos.index', array('arrayProductos' => $productos));
+
+        //$categoria = null valor por defecto en caso de que no se introduzca una categoría
+        if($categoria == null){
+            return view('productos.index', array('arrayProductos' => $productos));
+        } else {
+            //Creo un array nuevo donde guarde todos los productos de la categoría que escribí
+            $arrayNuevo = array();
+
+            //Recorro el array de $productos y voy cogiendo de un array de un array
+            foreach ($productos as $productoCategoria){
+
+                //Si ese producto, lleva la categoría que escribí, que me lo añada automáticamente
+                if($productoCategoria['categoria'] == $categoria){
+                    array_push($arrayNuevo, $productoCategoria);
+                }
+            }
+
+            //Si esta vacío el array porque esa categoría que introducimos, no existe, que me devuelva la vista original
+            if(empty($arrayNuevo)){
+                return redirect()->action([ProductoController::class, 'getIndex']);
+
+            //Si no esta vacío el array, que me pase todos los productos de esa categoría
+            } else {
+                return view('productos.index', array('arrayProductos' => $arrayNuevo));
+            }
+        }
     }
 
     public function getShow($id)
@@ -74,7 +101,7 @@ class ProductoController extends Controller
         return redirect()->action([ProductoController::class, 'getShow'] , $id);
     }
 
-    public function putComprar(Request $request, $id)
+    public function putComprar($id)
     {
         $producto = Producto::findOrFail($id);
 

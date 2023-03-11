@@ -36,7 +36,7 @@ Route::get('productos/edit/{id}', [ProductoController::class, 'getEdit']);
 */
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('productos', [ProductoController::class, 'getIndex']);
+    Route::get('productos/{categoria?}', [ProductoController::class, 'getIndex']);
 
     Route::get('productos/show/{id}', [ProductoController::class, 'getShow']);
 
