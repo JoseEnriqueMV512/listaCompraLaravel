@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductoController;
@@ -37,6 +38,8 @@ Route::get('productos/edit/{id}', [ProductoController::class, 'getEdit']);
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('productos/{categoria?}', [ProductoController::class, 'getIndex']);
+
+    Route::get('productos/categorias/{categoria}', [ProductoController::class, 'getCategoria']);
 
     Route::get('productos/show/{id}', [ProductoController::class, 'getShow']);
 
