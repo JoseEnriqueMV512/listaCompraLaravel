@@ -15,30 +15,37 @@ class ProductoController extends Controller
         //Pilla todos los productos de mi base de datos
         $productos = Producto::all();
 
-        //$categoria = null valor por defecto en caso de que no se introduzca una categoría
+        //$categoria = null valor por defecto en caso de que no se introduzca una categoría y que me devuelva /productos
         if($categoria == null){
             return view('productos.index', array('arrayProductos' => $productos));
+        //Si $categoria no es null, que me redirija a getCategoria
         } else {
-            //Creo un array nuevo donde guarde todos los productos de la categoría que escribí
-            $arrayNuevo = array();
+            return redirect()->action([ProductoController::class, 'getCategoria'], $categoria);
+        }
+    }
 
-            //Recorro el array de $productos y voy cogiendo de un array de un array
-            foreach ($productos as $productoCategoria){
+    public function getCategoria($categoria){
+        $productos = Producto::all();
 
-                //Si ese producto, lleva la categoría que escribí, que me lo añada automáticamente
-                if($productoCategoria['categoria'] == $categoria){
-                    array_push($arrayNuevo, $productoCategoria);
-                }
+        //Creo un array nuevo donde guarde todos los productos de la categoría que escribí
+        $arrayNuevo = array();
+
+        //Recorro el array de $productos y voy cogiendo de un array de un array
+        foreach ($productos as $productoCategoria){
+
+            //Si ese producto, lleva la categoría que escribí, que me lo añada automáticamente
+            if($productoCategoria['categoria'] == $categoria){
+                array_push($arrayNuevo, $productoCategoria);
             }
+        }
 
-            //Si esta vacío el array porque esa categoría que introducimos, no existe, que me devuelva la vista original
-            if(empty($arrayNuevo)){
-                return redirect()->action([ProductoController::class, 'getIndex']);
+        //Si esta vacío el array porque esa categoría que introducimos, no existe, que me devuelva la vista original
+        if(empty($arrayNuevo)){
+            return redirect()->action([ProductoController::class, 'getIndex']);
 
-            //Si no esta vacío el array, que me pase todos los productos de esa categoría
-            } else {
-                return view('productos.index', array('arrayProductos' => $arrayNuevo));
-            }
+        //Si no esta vacío el array, que me pase todos los productos de esa categoría
+        } else {
+            return view('productos.index', array('arrayProductos' => $arrayNuevo));
         }
     }
 
